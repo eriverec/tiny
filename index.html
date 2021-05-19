@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+      src="https://cdn.tiny.cloud/1/29c52t6vd94gc3ehc6bqlbog27ruxhg47scyims97bm6jhdm/tinymce/5/tinymce.min.js"
+    ></script>
+  </head>
+  <body>
+    <textarea>
+    Welcome to TinyMCE!
+  </textarea
+    >
+    <script>
+      tinymce.init({
+        selector: "textarea",
+        plugins:
+          " code ",
+        toolbar:
+          "a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table",
+        toolbar_mode: "floating",
+        tinycomments_mode: "embedded",
+        tinycomments_author: "Author name", // note the comma at the end of the line!
+        toolbar: "code",
+      });
+    </script>
+  </body>
+</html>
