@@ -18,6 +18,7 @@
         <style>
             body {
                 margin: 30px 0px;
+                font-family: monospace;
             }
             .result-container {
                 margin-top: 20px;
@@ -27,6 +28,10 @@
                 border: 1px solid #dee2e6;
                 max-height: 400px;
                 overflow-y: auto;
+            }
+            
+            .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+                font-weight: 600;
             }
             .loading {
                 display: none;
@@ -41,38 +46,110 @@
                 <li class="nav-item" role="presentation">
                     <button
                         class="nav-link active"
-                        id="home-tab"
+                        id="bluestack-tab"
                         data-bs-toggle="tab"
-                        data-bs-target="#home"
+                        data-bs-target="#bluestack"
                         type="button"
                         role="tab"
-                        aria-controls="home"
-                        aria-selected="true"
+                        aria-controls="bluestack"
+                        aria-selected="false"
                     >
-                        Ecuavisa
+                        Bluestack
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button
                         class="nav-link"
-                        id="profile-tab"
+                        id="protecmedia-tab "
                         data-bs-toggle="tab"
-                        data-bs-target="#profile"
+                        data-bs-target="#protecmedia"
                         type="button"
                         role="tab"
-                        aria-controls="profile"
-                        aria-selected="false"
+                        aria-controls="protecmedia"
+                        aria-selected="true"
                     >
-                        Bluestack
+                        Protecmedia
                     </button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div
                     class="tab-pane fade show active"
-                    id="home"
+                    id="bluestack"
                     role="tabpanel"
-                    aria-labelledby="home-tab"
+                    aria-labelledby="bluestack-tab"
+                >
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h3>Extractor de contenidos BBC</h3>
+                            <div class="mb-3">
+                                <label for="bbcUrl" class="form-label"
+                                    >URL de BBC:</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="bbcUrl"
+                                    placeholder="https://www.bbc.com/mundo/noticias-42104844"
+                                    value=""
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary" id="extractBtn">
+                                    Extraer contenido
+                                </button>
+                                <button class="btn btn-secondary" id="resetBtn">
+                                    Reiniciar
+                                </button>
+                            </div>
+                            <div class="loading">
+                                <div
+                                    class="spinner-border text-primary"
+                                    role="status"
+                                >
+                                    <span class="visually-hidden"
+                                        >Cargando...</span
+                                    >
+                                </div>
+                                <span class="ms-2"
+                                    >Extrayendo contenido...</span
+                                >
+                            </div>
+                            <div id="resultContainer" style="display: none">
+                                <div
+                                    class="d-flex justify-content-between align-items-center mb-2"
+                                >
+                                    <h5>Resultado:</h5>
+                                    <button
+                                        class="btn btn-success btn-sm"
+                                        id="copyBtn"
+                                    >
+                                        📋 Copiar al portapapeles
+                                    </button>
+                                </div>
+                                <div class="result-container">
+                                    <pre
+                                        id="resultData"
+                                        style="
+                                            white-space: pre-wrap;
+                                            word-wrap: break-word;
+                                        "
+                                    ></pre>
+                                </div>
+                            </div>
+                            <div
+                                id="errorContainer"
+                                class="alert alert-danger mt-3"
+                                style="display: none"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="tab-pane fade "
+                    id="protecmedia"
+                    role="tabpanel"
+                    aria-labelledby="protecmedia-tab"
                 >
                     <div class="row">
                         <div class="col-12 col-md-8">
@@ -113,50 +190,6 @@
                         </div>
                     </div>
                 </div>
-                <div
-                    class="tab-pane fade"
-                    id="profile"
-                    role="tabpanel"
-                    aria-labelledby="profile-tab"
-                >
-                    <div class="row mt-3">
-                        <div class="col-12">
-                            <h3>Extractor de BBC</h3>
-                            <div class="mb-3">
-                                <label for="bbcUrl" class="form-label">URL de BBC:</label>
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    id="bbcUrl" 
-                                    placeholder="https://www.bbc.com/mundo/noticias-42104844"
-                                    value=""
-                                >
-                            </div>
-                            <div class="mb-3">
-                                <button class="btn btn-primary" id="extractBtn">Extraer contenido</button>
-                                <button class="btn btn-secondary" id="resetBtn">Reiniciar</button>
-                            </div>
-                            <div class="loading">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Cargando...</span>
-                                </div>
-                                <span class="ms-2">Extrayendo contenido...</span>
-                            </div>
-                            <div id="resultContainer" style="display: none;">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <h5>Resultado:</h5>
-                                    <button class="btn btn-success btn-sm" id="copyBtn">
-                                        📋 Copiar al portapapeles
-                                    </button>
-                                </div>
-                                <div class="result-container">
-                                    <pre id="resultData" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
-                                </div>
-                            </div>
-                            <div id="errorContainer" class="alert alert-danger mt-3" style="display: none;"></div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div></div>
@@ -171,90 +204,103 @@
             });
 
             // Bluestack API functionality
-            const extractBtn = document.getElementById('extractBtn');
-            const resetBtn = document.getElementById('resetBtn');
-            const copyBtn = document.getElementById('copyBtn');
-            const bbcUrl = document.getElementById('bbcUrl');
-            const resultContainer = document.getElementById('resultContainer');
-            const resultData = document.getElementById('resultData');
-            const errorContainer = document.getElementById('errorContainer');
-            const loading = document.querySelector('.loading');
+            const extractBtn = document.getElementById("extractBtn");
+            const resetBtn = document.getElementById("resetBtn");
+            const copyBtn = document.getElementById("copyBtn");
+            const bbcUrl = document.getElementById("bbcUrl");
+            const resultContainer = document.getElementById("resultContainer");
+            const resultData = document.getElementById("resultData");
+            const errorContainer = document.getElementById("errorContainer");
+            const loading = document.querySelector(".loading");
 
-            extractBtn.addEventListener('click', async () => {
+            extractBtn.addEventListener("click", async () => {
                 const url = bbcUrl.value.trim();
-                
+
                 if (!url) {
-                    showError('Por favor, ingresa una URL de BBC');
+                    showError("Por favor, ingresa una URL de BBC");
                     return;
                 }
 
-                if (!url.includes('bbc.com')) {
-                    showError('La URL debe ser de bbc.com');
+                if (!url.includes("bbc.com")) {
+                    showError("La URL debe ser de bbc.com");
                     return;
                 }
 
                 try {
-                    loading.style.display = 'block';
-                    errorContainer.style.display = 'none';
-                    resultContainer.style.display = 'none';
+                    loading.style.display = "block";
+                    errorContainer.style.display = "none";
+                    resultContainer.style.display = "none";
 
-                    const response = await fetch('https://bbc-extractor.vercel.app/bbc/scrape', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
+                    // Usar proxy CORS
+                    const proxyUrl = "https://corsproxy.io/?";
+                    const apiUrl =
+                        "https://bbc-extractor.vercel.app/bbc/scrape";
+
+                    const response = await fetch(
+                        proxyUrl + encodeURIComponent(apiUrl),
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ url: url }),
                         },
-                        body: JSON.stringify({ url: url })
-                    });
+                    );
 
                     const data = await response.json();
 
-                    loading.style.display = 'none';
+                    loading.style.display = "none";
 
                     if (data.success && data.data) {
                         resultData.textContent = data.data;
-                        resultContainer.style.display = 'block';
+                        resultContainer.style.display = "block";
                     } else {
-                        showError('No se pudo extraer el contenido. Verifica la URL.');
+                        showError(
+                            "No se pudo extraer el contenido. Verifica la URL.",
+                        );
                     }
                 } catch (error) {
-                    loading.style.display = 'none';
-                    showError('Error al conectar con la API: ' + error.message);
+                    loading.style.display = "none";
+                    showError("Error al conectar con la API: " + error.message);
                 }
             });
 
-            copyBtn.addEventListener('click', () => {
+            copyBtn.addEventListener("click", () => {
                 const text = resultData.textContent;
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = copyBtn.textContent;
-                    copyBtn.textContent = '✅ Copiado!';
-                    copyBtn.classList.remove('btn-success');
-                    copyBtn.classList.add('btn-info');
-                    
-                    setTimeout(() => {
-                        copyBtn.textContent = originalText;
-                        copyBtn.classList.remove('btn-info');
-                        copyBtn.classList.add('btn-success');
-                    }, 2000);
-                }).catch(err => {
-                    showError('Error al copiar: ' + err.message);
-                });
+                navigator.clipboard
+                    .writeText(text)
+                    .then(() => {
+                        const originalText = copyBtn.textContent;
+                        copyBtn.textContent = "✅ Copiado!";
+                        copyBtn.classList.remove("btn-success");
+                        copyBtn.classList.add("btn-info");
+
+                        setTimeout(() => {
+                            copyBtn.textContent = originalText;
+                            copyBtn.classList.remove("btn-info");
+                            copyBtn.classList.add("btn-success");
+                        }, 2000);
+                    })
+                    .catch((err) => {
+                        showError("Error al copiar: " + err.message);
+                    });
             });
 
-            resetBtn.addEventListener('click', () => {
-                bbcUrl.value = '';
-                resultContainer.style.display = 'none';
-                errorContainer.style.display = 'none';
-                resultData.textContent = '';
+            resetBtn.addEventListener("click", () => {
+                bbcUrl.value = "";
+                resultContainer.style.display = "none";
+                errorContainer.style.display = "none";
+                resultData.textContent = "";
             });
 
             function showError(message) {
                 errorContainer.textContent = message;
-                errorContainer.style.display = 'block';
+                errorContainer.style.display = "block";
             }
 
             // Enter key support
-            bbcUrl.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
+            bbcUrl.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") {
                     extractBtn.click();
                 }
             });
