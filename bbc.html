@@ -30,6 +30,14 @@
                 overflow-y: auto;
             }
             
+            .preview-container {
+                padding: 20px;
+                background-color: #ffffff;
+                max-height: 70vh;
+                overflow-y: auto;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            }
+            
             .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
                 font-weight: 600;
             }
@@ -119,13 +127,21 @@
                                 <div
                                     class="d-flex justify-content-between align-items-center mb-2"
                                 >
-                                    <h5>Resultado:</h5>
-                                    <button
-                                        class="btn btn-success btn-sm"
-                                        id="copyBtn"
-                                    >
-                                        📋 Copiar al portapapeles
-                                    </button>
+                                    <h5>Código HTML:</h5>
+                                    <div>
+                                        <button
+                                            class="btn btn-info btn-sm me-2"
+                                            id="previewBtn"
+                                        >
+                                            👁️ Ver Preview
+                                        </button>
+                                        <button
+                                            class="btn btn-success btn-sm"
+                                            id="copyBtn"
+                                        >
+                                            📋 Copiar al portapapeles
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="result-container">
                                     <pre
@@ -137,6 +153,7 @@
                                     ></pre>
                                 </div>
                             </div>
+                            
                             <div
                                 id="errorContainer"
                                 class="alert alert-danger mt-3"
@@ -195,6 +212,25 @@
             <div></div>
         </div>
 
+        <!-- Modal de Preview -->
+        <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="previewModalLabel">Vista previa del contenido</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="preview-container" id="previewContent">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             tinymce.init({
                 selector: "textarea",
@@ -207,11 +243,16 @@
             const extractBtn = document.getElementById("extractBtn");
             const resetBtn = document.getElementById("resetBtn");
             const copyBtn = document.getElementById("copyBtn");
+            const previewBtn = document.getElementById("previewBtn");
             const bbcUrl = document.getElementById("bbcUrl");
             const resultContainer = document.getElementById("resultContainer");
             const resultData = document.getElementById("resultData");
+            const previewContent = document.getElementById("previewContent");
             const errorContainer = document.getElementById("errorContainer");
             const loading = document.querySelector(".loading");
+            
+            // Instancia del modal
+            const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
 
             extractBtn.addEventListener("click", async () => {
                 const url = bbcUrl.value.trim();
@@ -252,8 +293,12 @@
                     loading.style.display = "none";
 
                     if (data.success && data.data) {
+                        // Mostrar código HTML
                         resultData.textContent = data.data;
                         resultContainer.style.display = "block";
+                        
+                        // Guardar el contenido para el preview
+                        previewContent.innerHTML = data.data;
                     } else {
                         showError(
                             "No se pudo extraer el contenido. Verifica la URL.",
@@ -263,6 +308,11 @@
                     loading.style.display = "none";
                     showError("Error al conectar con la API: " + error.message);
                 }
+            });
+
+            // Botón para abrir el modal de preview
+            previewBtn.addEventListener("click", () => {
+                previewModal.show();
             });
 
             copyBtn.addEventListener("click", () => {
@@ -291,6 +341,7 @@
                 resultContainer.style.display = "none";
                 errorContainer.style.display = "none";
                 resultData.textContent = "";
+                previewContent.innerHTML = "";
             });
 
             function showError(message) {
